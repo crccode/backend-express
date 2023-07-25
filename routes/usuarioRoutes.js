@@ -1,9 +1,9 @@
 import express from "express";
 
-import {usuarios} from "../controllers/usurioController.js"
+import {registrar} from "../controllers/usurioController.js"
 const router = express.Router();
 
 // METODOS VERBOSE
-router.get("/", usuarios)
+router.post("/", registrar)
 
 export default router;

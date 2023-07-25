@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 
 const app = express();
+// HABILITAMOS LA OPCION PARA QUE PUEDA LEER LOS JSON
+app.use(express.json());
 // ACCESO A LA VARIABLE DE ENTORNO
 dotenv.config();
 // VARIABLE PORT SI NO EXISTE TOMA POR DEFECTO 4000

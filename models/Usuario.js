@@ -37,6 +37,18 @@ const usuarioSchema = mongoose.Schema(
   }
 );
 
+// ESTE CODIGO SE EJECUTA ANTES DE AGREGAR EL REGISTRO A LA BD LEER LA DOC
+usuarioSchema.pre("save", async function (next) {
+  // ESTA FUNCION VERIFICA QUE ESTE CAMPO NO HAYA SIDO CAMBIADO 
+  if (!this.isModified("password")) {
+    next(); // SE EJECUTA EL SIGUIENTE MIDLEWARE 
+  }
+  // GENERA 10 RONDAS 
+  const salt = await bcrypt.genSalt(10);
+  // this.password HACEMOS REFERENCIA AL OBJETO
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
 // HACEMOS REFERENCIA AL MODELO 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 // HACEMOS DISPONIBLE LA VARIABLE 
