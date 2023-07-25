@@ -1,9 +1,9 @@
 import express from "express";
+
+import {usuarios} from "../controllers/usurioController.js"
 const router = express.Router();
 
 // METODOS VERBOSE
-router.get("/", (req,res) => {
-    res.send("DESDE LA API");
-});
+router.get("/", usuarios)
 
 export default router;
