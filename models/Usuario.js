@@ -49,6 +49,11 @@ usuarioSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+// COMPROBAR PASSWORD
+usuarioSchema.methods.comprobarPassword = async function (passwordFormulario) {
+  return await bcrypt.compare(passwordFormulario, this.password);
+};
+
 // HACEMOS REFERENCIA AL MODELO 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 // HACEMOS DISPONIBLE LA VARIABLE 
