@@ -64,5 +64,26 @@ const autenticar = async (req, res) => {
     return res.status(403).json({ msg: error.message });
   }
 };
+
+// BOTON CONFIRMAR
+const confirmar = async (req, res) => {
+  // ACCEDEMOS A LOS DATOS req.params
+  const { token } = req.params;
+  const usuarioConfirmar = await Usuario.findOne({ token });
+  if (!usuarioConfirmar) {
+    const error = new Error("Token no válido");
+    return res.status(403).json({ msg: error.message });
+  }
+  // SI EL USUARIO EXISTE ACTUALIZAMOS EL TOKEN YA QUE ES DE UN SOLO USO 
+  try {
+    usuarioConfirmar.confirmado = true;
+    usuarioConfirmar.token = "";
+    await usuarioConfirmar.save();
+    res.json({ msg: "Usuario Confirmado Correctamente" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   
-export {registrar, autenticar};
+export {registrar, autenticar, confirmar};
