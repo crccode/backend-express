@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import proyectoRoutes from "./routes/proyectoRoutes.js";
+import tareaRoutes from "./routes/tareaRoutes.js";
 
 import cors from "cors";
 
@@ -40,6 +41,7 @@ app.use(cors(corsOptions));
 // use TE PERMTE SOPORTAR LOS METODOS GET, PUT, DELETE 
 app.use("/api/usuarios", usuarioRoutes)
 app.use("/api/proyectos", proyectoRoutes);
+app.use("/api/tareas", tareaRoutes);
 
 
 app.listen(PORT, () => {
