@@ -1,8 +1,9 @@
 import nodemailer from "nodemailer";
 
+// RECIBE UNOS DATOS 
 export const emailRegistro = async (datos) => {
   const { email, nombre, token } = datos;
-
+  // USAMOS EL CODIGO QUE NOS DA  NODEMAILER CONFIGURAMOS EL CLIENTE
   const transport = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -11,6 +12,7 @@ export const emailRegistro = async (datos) => {
       pass: process.env.EMAIL_PASS,
     },
   });
+  
 
   // Información del email
 

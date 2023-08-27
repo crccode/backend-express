@@ -2,7 +2,7 @@
 import Usuario from "../models/Usuario.js";
 import generarId from "../helpers/generarId.js";
 import generarJWT from "../helpers/generarJWT.js";
-
+import { emailRegistro, emailOlvidePassword } from "../helpers/email.js";
 // CREAOS U NUEVO USUARIO Y LO GURADAMOS A LA BD
 const registrar = async (req, res) => {
     // Evitar registros duplicados
@@ -23,7 +23,12 @@ const registrar = async (req, res) => {
       // ESPERAMOS HASTA QUE FINALIZE LA INSERCION A LA BD
       await usuario.save();
   
-     
+      // Enviar el email de confirmacion
+      emailRegistro({
+        email: usuario.email,
+        nombre: usuario.nombre,
+        token: usuario.token,
+      });
   
       res.json({
         msg: "Usuario Creado Correctamente, Revisa tu Email para confirmar tu cuenta",
@@ -67,14 +72,13 @@ const autenticar = async (req, res) => {
 
 // BOTON CONFIRMAR
 const confirmar = async (req, res) => {
-  // ACCEDEMOS A LOS DATOS req.params
   const { token } = req.params;
   const usuarioConfirmar = await Usuario.findOne({ token });
   if (!usuarioConfirmar) {
     const error = new Error("Token no válido");
     return res.status(403).json({ msg: error.message });
   }
-  // SI EL USUARIO EXISTE ACTUALIZAMOS EL TOKEN YA QUE ES DE UN SOLO USO 
+
   try {
     usuarioConfirmar.confirmado = true;
     usuarioConfirmar.token = "";

@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 4000;
 //CONEXION A LA BD
 conectarDB();
 
-// Configurar CORS
+// Configurar CORS 
 const whitelist = [process.env.FRONTEND_URL];
 // origin VERIFICA QUIEN ESTA REALIZANDO LA PETICION DE CONEXION
 const corsOptions = {
@@ -35,15 +35,15 @@ const corsOptions = {
   },
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
+// app.use(cors(corsOptions));
 
 // ROUTING
 // use TE PERMTE SOPORTAR LOS METODOS GET, PUT, DELETE 
 app.use("/api/usuarios", usuarioRoutes)
 app.use("/api/proyectos", proyectoRoutes);
 app.use("/api/tareas", tareaRoutes);
-
-
+ 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 })
